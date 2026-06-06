@@ -90,7 +90,7 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
 
   <div class="progress-bar">
     <div class="dots" id="dots"></div>
-    <span class="prog-label" id="pl">Passo 1 di 5</span>
+    <span class="prog-label" id="pl">Passo 1 di 4</span>
   </div>
 
   <div class="step on" id="s0">
@@ -238,8 +238,7 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
           <li>Hotel confermabile oltre il periodo di prova</li>
           <li>Alloggio di servizio da liberare dopo il periodo di prova</li>
           <li>Alloggio di servizio utilizzabile anche dopo il periodo di prova</li>
-          <li>Ufficio non presente nella provincia</li>
-        </ol>
+          </ol>
       </div>
       <div class="table-wrap">
         <table>
@@ -249,8 +248,7 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
             <th>2<br><small>Hotel perm.</small></th>
             <th>3<br><small>All. prova</small></th>
             <th>4<br><small>All. perm.</small></th>
-            <th>5<br><small>Non presente</small></th>
-          </tr></thead>
+            </tr></thead>
           <tbody id="taa"></tbody>
         </table>
       </div>
@@ -258,23 +256,6 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
   </div>
 
   <div class="step" id="s3">
-    <div class="card">
-      <div class="card-title">Vice Ispettori — disponibilità alloggio</div>
-      <div class="card-sub">Indica per ogni ufficio se l'alloggio è disponibile per i Vice Ispettori</div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th class="l">Ufficio / Reparto</th>
-            <th>Disponibile</th><th>Non disponibile</th><th>Non presente</th>
-          </tr></thead>
-          <tbody id="tvi"></tbody>
-        </table>
-      </div>
-      <div class="field" style="margin-top:1rem"><label>Note su Altro o situazioni particolari Vice Ispettori</label><textarea id="fvn" placeholder="Eventuali precisazioni..."></textarea></div>
-    </div>
-  </div>
-
-  <div class="step" id="s4">
     <div class="card">
       <div class="card-title">Dettaglio numerico alloggi</div>
       <div class="card-sub">Per ogni ufficio presente specifica il numero di alloggi disponibili</div>
@@ -285,7 +266,7 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
     <div class="msg" id="msg"></div>
   </div>
 
-  <div class="step" id="s5">
+  <div class="step" id="s4">
     <div class="card">
       <div class="success-screen">
         <span class="success-icon">&#x2705;</span>
@@ -310,8 +291,7 @@ const PF = new Set(["Agrigento","Ancona","Arezzo","Bari","Bologna","Brescia","Br
 const COMM = {"Agrigento": ["Canicatti", "Licata", "Palma Di Montechiaro", "Porto Empedocle Marittimo", "Sciacca"], "Alessandria": ["Casale Monferrato"], "Ancona": ["Fabriano", "Jesi", "Osimo", "Senigallia"], "Aosta": [], "Arezzo": ["Montevarchi", "San Sepolcro"], "Ascoli Piceno": ["San Benedetto Del Tronto"], "Asti": [], "Avellino": ["Ariano Irpino", "Cervinara", "Lauro", "Sant Angelo Dei Lombardi"], "Bari": ["Bari Nuova - Carrassi", "San Nicola", "San Paolo", "Bitonto", "Corato", "Gravina In Puglia", "Monopoli", "Putignano"], "Barletta-Andria-Trani": ["Barletta", "Trani", "Canosa Di Puglia"], "Belluno": [], "Benevento": ["Telese Terme"], "Bergamo": ["Treviglio"], "Biella": [], "Bologna": ["Bolognina Ponte", "Due Torri", "Santa Viola", "Imola", "San Giovanni In Persiceto"], "Bolzano": ["Brennero", "Bressanone", "Merano", "San Candido"], "Brescia": ["Carmine", "Desenzano Del Garda"], "Brindisi": ["Mesagne", "Ostuni"], "Cagliari": ["Sant Avendrace", "Carbonia", "Iglesias", "Quartu Sant Elena"], "Caltanissetta": ["Gela", "Niscemi"], "Campobasso": ["Termoli"], "Caserta": ["Casal Di Principe", "Aversa", "Castel Volturno", "Maddaloni", "Marcianise", "Santa Maria Capua Vetere", "Sessa Aurunca"], "Catania": ["Borgo Ognina", "Centrale", "Librino", "Nesima", "San Cristoforo", "Acireale", "Adrano", "Caltagirone"], "Catanzaro": ["Catanzaro Lido", "Lamezia Terme"], "Chieti": ["Lanciano", "Vasto"], "Como": [], "Cosenza": ["Castrovillari", "Paola", "Corigliano - Rossano"], "Cremona": ["Crema"], "Crotone": [], "Cuneo": [], "Enna": ["Leonforte", "Nicosia", "Piazza Armerina"], "Fermo": [], "Ferrara": [], "Firenze": ["Oltrarno", "Rifredi Pretola", "San Giovanni", "Empoli", "Sesto Fiorentino"], "Foggia": ["Cerignola", "Lucera", "Manfredonia", "San Severo"], "Forl\u00ec-Cesena": ["Cesena"], "Frosinone": ["Cassino", "Fiuggi", "Sora"], "Genova": ["Centro", "Cornigliano", "Nervi", "Pre", "San Fruttuoso", "Sestri Ponente", "Sturla", "Chiavari", "Rapallo"], "Gorizia": ["Monfalcone"], "Grosseto": [], "Imperia": ["San Remo", "Ventimiglia"], "Isernia": [], "La Spezia": ["Sarzana"], "L'Aquila": ["Avezzano", "Sulmona"], "Latina": ["Cisterna Di Latina", "Fondi", "Formia", "Gaeta", "Terracina"], "Lecce": ["Galatina", "Gallipoli", "Nardo", "Otranto", "Taurisano"], "Lecco": [], "Livorno": ["Cecina", "Piombino", "Portoferraio", "Rosignano Marittimo"], "Lodi": [], "Lucca": ["Forte Dei Marmi", "Viareggio"], "Macerata": ["Civitanova Marche"], "Mantova": [], "Massa-Carrara": ["Carrara"], "Matera": ["Pisticci", "Policoro"], "Messina": ["Messina Nord", "Messina Sud", "Barcellona Pozzo Di Gotto", "Capo D Orlando", "Milazzo", "Patti", "Sant Agata Di Militello", "Taormina"], "Milano": ["Porta Genova", "Greco Turro", "Villa San Giovanni", "Lambrate", "Mecenate", "Scalo Romana", "Quarto Oggiaro", "Cinisello Balsamo", "Legnano", "Rho-Pero", "Sesto San Giovanni"], "Modena": ["Carpi", "Mirandola", "Sassuolo"], "Monza e Brianza": [], "Napoli": ["Posillipo", "Dante", "Montecalvario", "Poggioreale", "Vasto Arenaccia", "Palazzo Di Giustizia", "Arenella", "Ponticelli", "Chiaiano", "Acerra", "Afragola", "Capri", "Castellammare Di Stabia", "Frattamaggiore", "Giugliano In Campania", "Ischia", "Nola", "Pompei", "Portici Ercolano", "Pozzuoli", "San Giorgio A Cremano", "San Giuseppe Vesuviano", "Sorrento", "Torre Annunziata", "Torre Del Greco"], "Novara": [], "Nuoro": ["Gavoi", "Lanusei", "Macomer", "Orgosolo", "Ottana", "Siniscola", "Tortoli"], "Oristano": [], "Padova": ["Stanga"], "Palermo": ["Brancaccio", "Liberta", "Mondello", "Oreto Stazione", "Politeama", "Porta Nuova", "San Lorenzo", "Zisa - Borgo Nuovo", "Bagheria", "Cefalu", "Corleone", "Partinico", "Termini Imerese"], "Parma": [], "Pavia": ["Vigevano", "Voghera"], "Perugia": ["Assisi", "Citta  Di Castello", "Foligno", "Spoleto"], "Pesaro e Urbino": [], "Pescara": [], "Piacenza": [], "Pisa": ["Pontedera", "Volterra"], "Pistoia": ["Montecatini Terme", "Pescia"], "Pordenone": [], "Potenza": ["Melfi"], "Prato": [], "Ragusa": ["Comiso", "Modica", "Vittoria"], "Ravenna": ["Faenza", "Lugo"], "Reggio Calabria": ["Bovalino", "Cittanova", "Condofuri", "Gioia Tauro", "Palmi", "Polistena", "Siderno", "Taurianova", "Villa San Giovanni"], "Reggio Emilia": [], "Rieti": [], "Rimini": [], "Roma": ["Borgo", "Castro Pretorio", "Celio", "Esquilino", "Palazzo Giustizia", "Prati", "Rai Tv", "Trastevere", "Viminale", "Porta Pia", "San Lorenzo", "Universita", "Vescovio", "Villa Glori", "Sant Ippolito", "Porta Maggiore", "Tor Pignattara", "Appio Nuovo", "Romanina", "Tuscolano", "Cristoforo Colombo", "Spinaceto", "Monte Mario", "Flaminio Nuovo", "Civitavecchia", "Colleferro", "Fiumicino", "Frascati", "Marino", "Tivoli", "Velletri", "Ladispoli"], "Rovigo": ["Adria", "Porto Tolle"], "Salerno": ["Torrione", "Battipaglia", "Cava De  Tirreni", "Nocera Inferiore", "Sarno"], "Sassari": ["Alghero", "Olbia", "Ozieri", "Porto Cervo Arzachena", "Tempio Pausania"], "Savona": ["Alassio"], "Siena": ["Chiusi-Chianciano", "Poggibonsi"], "Siracusa": ["Ortigia", "Augusta", "Avola", "Lentini", "Noto", "Pachino", "Priolo Gargallo"], "Sondrio": [], "Sud Sardegna": [], "Taranto": ["Borgo", "Grottaglie", "Manduria", "Martina Franca"], "Teramo": ["Atri"], "Terni": ["Orvieto"], "Torino": ["San Secondo", "Borgo Po", "Bardonecchia", "Ivrea", "Rivoli"], "Trapani": ["Alcamo", "Castellammare Del Golfo", "Castelvetrano", "Marsala", "Mazara Del Vallo"], "Trento": ["Riva Del Garda", "Rovereto"], "Treviso": ["Conegliano"], "Trieste": ["Opicina", "Rozzol Melara", "S. Saba", "Duino Aurisina", "Muggia"], "Udine": ["Cividale Del Friuli", "Tolmezzo"], "Varese": ["Busto Arsizio", "Gallarate"], "Venezia": ["Marghera", "Mestre", "San Marco", "Chioggia", "Jesolo", "Portogruaro"], "Verbano-Cusio-Ossola": ["Omegna"], "Vercelli": [], "Verona": ["Borgo Roma"], "Vibo Valentia": ["Serra San Bruno"], "Vicenza": ["Bassano Del Grappa"], "Viterbo": ["Tarquinia"], "Olbia": []};
 const DIST = {"Agrigento": ["Canicatti", "Sciacca"], "Alessandria": ["Alessandria", "Casale Sud", "Ovada", "Acqui Terme", "Tortona", "Valenza Po"], "Ancona": ["Fabriano", "Jesi", "Senigallia"], "Aosta": ["Courmayer"], "Arezzo": ["Arezzo", "Ponte A Poppi"], "Ascoli Piceno": [], "Asti": ["Nizza Monferrato"], "Avellino": ["Avellino Ovest", "Grottaminarda"], "Bari": ["Bari", "Castellana Grotte", "Gioia Del Colle", "Trani"], "Barletta-Andria-Trani": [], "Belluno": ["Feltre"], "Benevento": [], "Bergamo": ["Seriate", "Treviglio"], "Biella": [], "Bologna": ["Altedo", "Bologna Sud", "Imola"], "Bolzano": ["Bressanone", "Brunico"], "Brescia": ["Chiari", "Montichiari", "Desenzano", "Iseo", "Salo"], "Brindisi": ["Fasano"], "Cagliari": ["Carbonia", "Muravera", "Sanluri"], "Caltanissetta": ["Gela"], "Campobasso": ["Termoli"], "Caserta": ["Caserta Nord", "Caianello", "Capua", "Cellole"], "Catania": ["Caltagirone", "Randazzo"], "Catanzaro": ["Lamezia Terme", "Soverato"], "Chieti": ["Vasto", "Lanciano"], "Como": [], "Cosenza": ["Cosenza Nord", "Frascineto", "Paola", "Rossano", "Scalea", "Trebisacce"], "Cremona": ["Casalmaggiore", "Crema", "Pizzighettone"], "Crotone": [], "Cuneo": ["Mondovi", "Saluzzo"], "Enna": ["Catenanuova", "Nicosia"], "Fermo": ["Amandola"], "Ferrara": ["Argenta", "Codigoro"], "Firenze": ["Firenze Nord", "Empoli"], "Foggia": ["Foggia", "Cerignola", "San Severo"], "Forl\u00ec-Cesena": [], "Frosinone": ["Cassino", "Frosinone", "Sora"], "Genova": ["Sampierdarena", "Chiavari"], "Gorizia": ["Monfalcone"], "Grosseto": ["Arcidosso", "Massa Marittima", "Orbetello"], "Imperia": ["Imperia"], "Isernia": ["Agnone"], "La Spezia": ["Brugnato"], "L'Aquila": ["Castel Di Sangro", "Sulmona"], "Latina": ["Formia", "Terracina"], "Lecce": ["Maglie"], "Lecco": [], "Livorno": ["Cecina", "Venturina"], "Lodi": ["Guardamiglio"], "Lucca": ["Viareggio", "Bagni Di Lucca"], "Macerata": ["Camerino"], "Mantova": ["Ostiglia"], "Massa-Carrara": [], "Matera": ["Policoro"], "Messina": ["Messina", "Sant Agata Militello", "Barcellona"], "Milano": ["Milano Ovest", "Magenta"], "Modena": ["Modena", "Mirandola", "Pavullo"], "Monza e Brianza": [], "Napoli": ["Napoli Nord", "Sorrento"], "Novara": ["Romagnano Sesia", "Novara Est", "Arona"], "Nuoro": ["Bitti", "Laconi", "Lanusei", "Macomer", "Orosei", "Siniscola"], "Oristano": [], "Padova": ["Piove Di Sacco"], "Palermo": ["Buonfornello", "Lercara Friddi"], "Parma": ["Fidenza", "Fornovo Taro"], "Pavia": ["Stradella", "Vigevano", "Voghera"], "Perugia": ["Foligno", "Todi"], "Pesaro e Urbino": [], "Pescara": ["Piano D Orta"], "Piacenza": [], "Pisa": [], "Pistoia": ["Montecatini"], "Pordenone": ["Spilimbergo"], "Potenza": ["Lagonegro", "Melfi", "Moliterno"], "Prato": [], "Ragusa": ["Vittoria"], "Ravenna": ["Faenza"], "Reggio Calabria": ["Palmi", "Reggio Calabria Nord", "Brancaleone", "Siderno"], "Reggio Emilia": ["Guastalla"], "Rieti": ["Amatrice", "Passo Corese"], "Rimini": ["Novafeltria"], "Roma": ["Ladispoli", "Roma Nord", "Roma Sud", "Colleferro", "Tivoli"], "Rovigo": ["Rovigo", "Adria", "Badia Polesine"], "Salerno": ["Angri", "Sala Consilina", "Eboli", "Sapri"], "Sassari": ["Olbia", "Tempio Pausania"], "Savona": ["Carcare"], "Siena": ["Montepulciano"], "Siracusa": ["Lentini", "Noto"], "Sondrio": ["Mese"], "Sud Sardegna": [], "Taranto": ["Palagiano", "Manduria"], "Teramo": ["Giulianova", "Pineto"], "Terni": ["Orvieto"], "Torino": ["Torino", "Susa", "Chivasso", "Pinerolo"], "Trapani": ["Alcamo", "Castelvetrano", "Marsala"], "Trento": ["Trento", "Male", "Di Predazzo", "Riva Del Garda"], "Treviso": ["Treviso", "Vittorio Veneto"], "Trieste": [], "Udine": ["Amaro"], "Varese": ["Luino"], "Venezia": ["Portogruaro"], "Verbano-Cusio-Ossola": [], "Vercelli": ["Varallo Sesia"], "Verona": ["Verona", "Bardolino", "Legnago"], "Vibo Valentia": [], "Vicenza": ["Schio"], "Viterbo": ["Monterosi", "Tarquinia"], "Olbia": []};
 
-const AAV = ['hp','hpm','ap','apm','np'];
-const VIV = ['disp','ndisp','np'];
+const AAV = ['hp','hpm','ap','apm'];
 
 // Struttura reparti fissi
 const BASE_REPS = [
@@ -324,7 +304,7 @@ const BASE_REPS = [
   {k:'altro', l:'Altro', cat:'Altro'},
 ];
 
-let stp=0, activeItems=[], TOT=5;
+let stp=0, activeItems=[], TOT=4;
 
 function gpr(p) {
   return {
@@ -426,7 +406,7 @@ function getActiveItems() {
 }
 
 function buildTables(items) {
-  ['taa','tvi','anc'].forEach(id=>document.getElementById(id).innerHTML='');
+  ['taa','anc'].forEach(id=>document.getElementById(id).innerHTML='');
   
   // Raggruppa per categoria (dalla struttura originale)
   let lastCat = null;
@@ -444,18 +424,14 @@ function buildTables(items) {
       trGH.className = 'group-header';
       trGH.innerHTML = '<td colspan="6">'+cat+'</td>';
       document.getElementById('taa').appendChild(trGH.cloneNode(true));
-      const trGHvi = trGH.cloneNode(false);
-      trGHvi.innerHTML = '<td colspan="4">'+cat+'</td>';
-      document.getElementById('tvi').appendChild(trGHvi);
+
       lastCat = cat;
     }
     
     const ra = document.createElement('tr');
     ra.innerHTML = '<td class="l">'+item.l+'</td>'+AAV.map(v=>'<td><input type="radio" name="aa-'+item.k+'" value="'+v+'"></td>').join('');
     document.getElementById('taa').appendChild(ra);
-    const rv = document.createElement('tr');
-    rv.innerHTML = '<td class="l">'+item.l+'</td>'+VIV.map(v=>'<td><input type="radio" name="vi-'+item.k+'" value="'+v+'"></td>').join('');
-    document.getElementById('tvi').appendChild(rv);
+
     const d = document.createElement('div');
     d.className = 'an-block';
     d.innerHTML = '<div class="an-label">'+item.l+'</div><div class="an-opts"><label><input type="radio" name="an-'+item.k+'" value="limitato"> Limitati al numero degli agenti in arrivo</label><label><input type="radio" name="an-'+item.k+'" value="specifico"> Numero specifico: <input type="number" class="num-input" id="ann-'+item.k+'" min="0" max="500" placeholder="0"></label><label><input type="radio" name="an-'+item.k+'" value="np"> Non presente nella provincia</label></div>';
@@ -516,7 +492,6 @@ function submitForm() {
       const n=document.getElementById('ann-'+i.k);
       return[i.l, v==='specifico'&&n?v+':'+n.value:v];
     })),
-    vi_note: document.getElementById('fvn').value.trim(),
     note: document.getElementById('fnt').value.trim()
   };
   const msg = document.getElementById('msg');
