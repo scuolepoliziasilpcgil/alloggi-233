@@ -528,13 +528,13 @@ function submitForm() {
         document.getElementById('ok-msg').textContent='I dati di '+payload.prov+' sono stati registrati correttamente. Grazie!';
       }else{
         msg.className='msg err';msg.style.display='block';
-        msg.textContent='Errore durante l'invio. Riprova o scrivi a scuolepolizia@silp.cgil.it';
+        msg.textContent="Errore durante l'invio. Riprova o scrivi a scuolepolizia@silp.cgil.it";
         btn.disabled=false;btn.textContent='✓ Invia compilazione';
       }
     })
     .catch(()=>{
       msg.className='msg err';msg.style.display='block';
-      msg.textContent='Errore di connessione. Controlla la rete e riprova.';
+      msg.textContent="Errore di connessione. Controlla la rete e riprova.";
       btn.disabled=false;btn.textContent='✓ Invia compilazione';
     });
 }
