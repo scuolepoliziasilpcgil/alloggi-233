@@ -10,14 +10,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .wrap{max-width:700px;margin:0 auto;padding:1.5rem 1rem 3rem}
 .hdr{background:linear-gradient(135deg,#1a1a5e 0%,#0d0d3b 100%);color:#fff;border-radius:14px;padding:1.5rem;margin-bottom:1.75rem;display:flex;align-items:center;gap:16px;box-shadow:0 4px 20px rgba(0,0,0,.2)}
 .hdr img{width:64px;height:64px;border-radius:10px;flex-shrink:0;object-fit:cover}
-.hdr-title{font-size:17px;font-weight:700;letter-spacing:-.01em}
-.hdr-sub{font-size:12px;opacity:.8;margin-top:3px;line-height:1.4}
+.hdr-title{font-size:17px;font-weight:700}
+.hdr-sub{font-size:12px;opacity:.8;margin-top:3px;line-height:1.5}
 .hdr-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:3px 10px;font-size:11px;margin-top:6px}
 .progress-bar{background:#fff;border-radius:50px;padding:.85rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .dots{display:flex;gap:6px;flex:1}
-.dot{height:6px;border-radius:3px;background:#e0e0e0;flex:1;transition:background .3s,flex .3s}
-.dot.done{background:#c8102e}
-.dot.cur{background:#c8102e;flex:2}
+.dot{height:6px;border-radius:3px;background:#e0e0e0;flex:1;transition:background .3s}
+.dot.done{background:#c8102e}.dot.cur{background:#c8102e;flex:2}
 .prog-label{font-size:12px;color:#888;white-space:nowrap}
 .card{background:#fff;border-radius:12px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .card-title{font-size:15px;font-weight:700;color:#1a1a5e;margin-bottom:.25rem;display:flex;align-items:center;gap:8px}
@@ -25,14 +24,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .card-sub{font-size:13px;color:#777;margin-bottom:1.25rem;padding-left:12px}
 .field{margin-bottom:1rem}
 .field label{display:block;font-size:13px;color:#555;margin-bottom:5px;font-weight:500}
-.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1.5px solid #e8e8e8;border-radius:8px;font-size:14px;font-family:inherit;background:#fafafa;transition:border-color .2s,background .2s}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1.5px solid #e8e8e8;border-radius:8px;font-size:14px;font-family:inherit;background:#fafafa;transition:border-color .2s}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#c8102e;background:#fff;box-shadow:0 0 0 3px rgba(200,16,46,.08)}
 .field textarea{min-height:75px;resize:vertical}
 .req{color:#c8102e;margin-left:2px}
 .legend{background:#fff8f8;border:1.5px solid #f5d0d5;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1.1rem}
-.legend-title{font-size:13px;font-weight:600;color:#c8102e;margin-bottom:.5rem;display:flex;align-items:center;gap:6px}
+.legend-title{font-size:13px;font-weight:600;color:#c8102e;margin-bottom:.5rem}
 .legend ol{padding-left:1.2rem;line-height:2;font-size:12.5px;color:#555}
 .info-box{background:#f0f4ff;border:1.5px solid #c5d3f5;border-radius:10px;padding:.85rem 1rem;margin-bottom:1.1rem;font-size:12.5px;color:#3a5abf;line-height:1.5}
+.warn-box{background:#fff8e1;border:1.5px solid #ffe082;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem;font-size:13px;color:#7c5700}
+.warn-box strong{display:block;margin-bottom:4px;font-size:14px}
+.warn-btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.wb1{background:#c8102e;border:none;color:#fff;padding:7px 14px;border-radius:7px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600}
+.wb2{background:transparent;border:1.5px solid #f0a800;color:#7c5700;padding:7px 14px;border-radius:7px;font-size:12px;cursor:pointer;font-family:inherit}
 .table-wrap{overflow-x:auto;border-radius:10px;border:1.5px solid #f0f0f0}
 table{width:100%;border-collapse:collapse;font-size:12px;min-width:480px}
 thead tr{background:#1a1a5e}
@@ -44,8 +48,6 @@ tr:nth-child(even) td{background:#fafafa}
 tr:hover td{background:#fff5f5}
 input[type=radio]{accent-color:#c8102e;width:15px;height:15px;cursor:pointer}
 input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
-.rep-select-section{margin-bottom:1.25rem}
-.rep-select-title{font-size:13px;font-weight:600;color:#333;margin-bottom:.75rem}
 .rep-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .rep-item{display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:8px;border:1.5px solid #e8e8e8;cursor:pointer;font-size:13px;color:#333;background:#fafafa;transition:all .15s}
 .rep-item:hover{border-color:#c8102e;background:#fff5f5}
@@ -63,20 +65,15 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
 .btn{padding:11px 24px;border-radius:9px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s;border:none}
 .btn-back{background:#fff;border:1.5px solid #ddd;color:#555}
 .btn-back:hover{border-color:#c8102e;color:#c8102e}
-.btn-next{background:#c8102e;color:#fff;flex:1;max-width:200px}
-.btn-next:hover{background:#a80d26;transform:translateY(-1px)}
-.btn-submit{background:#1a1a5e;color:#fff;width:100%;padding:13px;font-size:15px;border-radius:10px;margin-top:1rem;letter-spacing:.02em}
-.btn-submit:hover{background:#0d0d3b;transform:translateY(-1px)}
-.btn-submit:disabled{background:#aaa;transform:none;cursor:not-allowed}
+.btn-next{background:#c8102e;color:#fff}
+.btn-next:hover{background:#a80d26}
+.btn-submit{background:#1a1a5e;color:#fff;width:100%;padding:13px;font-size:15px;border-radius:10px;margin-top:1rem}
+.btn-submit:hover{background:#0d0d3b}
+.btn-submit:disabled{background:#aaa;cursor:not-allowed}
 .step{display:none}.step.on{display:block}
 .msg{display:none;padding:1.25rem;border-radius:10px;margin-top:1rem;text-align:center;font-size:14px;font-weight:500}
 .msg.ok{background:#e8f5e9;color:#2e7d32;border:1.5px solid #a5d6a7}
 .msg.err{background:#ffebee;color:#c62828;border:1.5px solid #ef9a9a}
-.dup-warning{background:#fff8e1;border:1.5px solid #ffe082;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem;font-size:13px;color:#7c5700}
-.dup-warning strong{display:block;margin-bottom:4px;font-size:14px}
-.dup-btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.dup-btn1{background:#c8102e;border:none;color:#fff;padding:7px 14px;border-radius:7px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600}
-.dup-btn2{background:transparent;border:1.5px solid #f0a800;color:#7c5700;padding:7px 14px;border-radius:7px;font-size:12px;cursor:pointer;font-family:inherit}
 .success-screen{text-align:center;padding:2rem 1rem}
 .success-icon{font-size:56px;margin-bottom:1rem;display:block}
 </style>
@@ -98,7 +95,6 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
     <span class="prog-label" id="pl">Passo 1 di 5</span>
   </div>
 
-  <!-- STEP 0: Identificazione -->
   <div class="step on" id="s0">
     <div class="card">
       <div class="card-title">Identificazione compilatore</div>
@@ -108,6 +104,114 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
         <label>Provincia<span class="req">*</span></label>
         <select id="fp" onchange="onProvChange()">
           <option value="">— Seleziona la provincia —</option>
+          <option value="Agrigento">Agrigento</option>
+<option value="Alessandria">Alessandria</option>
+<option value="Ancona">Ancona</option>
+<option value="Aosta">Aosta</option>
+<option value="Arezzo">Arezzo</option>
+<option value="Ascoli Piceno">Ascoli Piceno</option>
+<option value="Asti">Asti</option>
+<option value="Avellino">Avellino</option>
+<option value="Bari">Bari</option>
+<option value="Barletta-Andria-Trani">Barletta-Andria-Trani</option>
+<option value="Belluno">Belluno</option>
+<option value="Benevento">Benevento</option>
+<option value="Bergamo">Bergamo</option>
+<option value="Biella">Biella</option>
+<option value="Bologna">Bologna</option>
+<option value="Bolzano">Bolzano</option>
+<option value="Brescia">Brescia</option>
+<option value="Brindisi">Brindisi</option>
+<option value="Cagliari">Cagliari</option>
+<option value="Caltanissetta">Caltanissetta</option>
+<option value="Campobasso">Campobasso</option>
+<option value="Caserta">Caserta</option>
+<option value="Catania">Catania</option>
+<option value="Catanzaro">Catanzaro</option>
+<option value="Chieti">Chieti</option>
+<option value="Como">Como</option>
+<option value="Cosenza">Cosenza</option>
+<option value="Cremona">Cremona</option>
+<option value="Crotone">Crotone</option>
+<option value="Cuneo">Cuneo</option>
+<option value="Enna">Enna</option>
+<option value="Fermo">Fermo</option>
+<option value="Ferrara">Ferrara</option>
+<option value="Firenze">Firenze</option>
+<option value="Foggia">Foggia</option>
+<option value="Forlì-Cesena">Forlì-Cesena</option>
+<option value="Frosinone">Frosinone</option>
+<option value="Genova">Genova</option>
+<option value="Gorizia">Gorizia</option>
+<option value="Grosseto">Grosseto</option>
+<option value="Imperia">Imperia</option>
+<option value="Isernia">Isernia</option>
+<option value="La Spezia">La Spezia</option>
+<option value="L'Aquila">L'Aquila</option>
+<option value="Latina">Latina</option>
+<option value="Lecce">Lecce</option>
+<option value="Lecco">Lecco</option>
+<option value="Livorno">Livorno</option>
+<option value="Lodi">Lodi</option>
+<option value="Lucca">Lucca</option>
+<option value="Macerata">Macerata</option>
+<option value="Mantova">Mantova</option>
+<option value="Massa-Carrara">Massa-Carrara</option>
+<option value="Matera">Matera</option>
+<option value="Messina">Messina</option>
+<option value="Milano">Milano</option>
+<option value="Modena">Modena</option>
+<option value="Monza e Brianza">Monza e Brianza</option>
+<option value="Napoli">Napoli</option>
+<option value="Novara">Novara</option>
+<option value="Nuoro">Nuoro</option>
+<option value="Oristano">Oristano</option>
+<option value="Padova">Padova</option>
+<option value="Palermo">Palermo</option>
+<option value="Parma">Parma</option>
+<option value="Pavia">Pavia</option>
+<option value="Perugia">Perugia</option>
+<option value="Pesaro e Urbino">Pesaro e Urbino</option>
+<option value="Pescara">Pescara</option>
+<option value="Piacenza">Piacenza</option>
+<option value="Pisa">Pisa</option>
+<option value="Pistoia">Pistoia</option>
+<option value="Pordenone">Pordenone</option>
+<option value="Potenza">Potenza</option>
+<option value="Prato">Prato</option>
+<option value="Ragusa">Ragusa</option>
+<option value="Ravenna">Ravenna</option>
+<option value="Reggio Calabria">Reggio Calabria</option>
+<option value="Reggio Emilia">Reggio Emilia</option>
+<option value="Rieti">Rieti</option>
+<option value="Rimini">Rimini</option>
+<option value="Roma">Roma</option>
+<option value="Rovigo">Rovigo</option>
+<option value="Salerno">Salerno</option>
+<option value="Sassari">Sassari</option>
+<option value="Savona">Savona</option>
+<option value="Siena">Siena</option>
+<option value="Siracusa">Siracusa</option>
+<option value="Sondrio">Sondrio</option>
+<option value="Sud Sardegna">Sud Sardegna</option>
+<option value="Taranto">Taranto</option>
+<option value="Teramo">Teramo</option>
+<option value="Terni">Terni</option>
+<option value="Torino">Torino</option>
+<option value="Trapani">Trapani</option>
+<option value="Trento">Trento</option>
+<option value="Treviso">Treviso</option>
+<option value="Trieste">Trieste</option>
+<option value="Udine">Udine</option>
+<option value="Varese">Varese</option>
+<option value="Venezia">Venezia</option>
+<option value="Verbano-Cusio-Ossola">Verbano-Cusio-Ossola</option>
+<option value="Vercelli">Vercelli</option>
+<option value="Verona">Verona</option>
+<option value="Vibo Valentia">Vibo Valentia</option>
+<option value="Vicenza">Vicenza</option>
+<option value="Viterbo">Viterbo</option>
+<option value="Olbia">Olbia</option>
         </select>
       </div>
       <div class="field"><label>Cognome e nome<span class="req">*</span></label><input type="text" id="fn" placeholder="Es. Rossi Mario"></div>
@@ -116,17 +220,15 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
     </div>
   </div>
 
-  <!-- STEP 1: Conferma reparti -->
   <div class="step" id="s1">
     <div class="card">
       <div class="card-title">Reparti presenti in provincia</div>
       <div class="card-sub" id="rep-sub">Verifica i reparti precompilati per la tua provincia</div>
-      <div class="info-box">&#x2139;&#xFE0F; I reparti selezionati sono quelli stimati presenti nella tua provincia. Aggiungi o rimuovi spunte se necessario prima di procedere.</div>
+      <div class="info-box">&#x2139;&#xFE0F; I reparti selezionati sono quelli stimati presenti. Aggiungi o rimuovi spunte se necessario prima di procedere.</div>
       <div class="rep-grid" id="rep-toggles"></div>
     </div>
   </div>
 
-  <!-- STEP 2: AA -->
   <div class="step" id="s2">
     <div class="card">
       <div class="card-title">Allievi Agenti — tipo alloggio</div>
@@ -145,11 +247,7 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
         <table>
           <thead><tr>
             <th class="l">Reparto</th>
-            <th>1&#10;<small>Hotel prova</small></th>
-            <th>2&#10;<small>Hotel perm.</small></th>
-            <th>3&#10;<small>All. prova</small></th>
-            <th>4&#10;<small>All. perm.</small></th>
-            <th>5&#10;<small>Non presente</small></th>
+            <th>1 Hotel<br>prova</th><th>2 Hotel<br>perm.</th><th>3 All.<br>prova</th><th>4 All.<br>perm.</th><th>5 Non<br>presente</th>
           </tr></thead>
           <tbody id="taa"></tbody>
         </table>
@@ -157,7 +255,6 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
     </div>
   </div>
 
-  <!-- STEP 3: VI -->
   <div class="step" id="s3">
     <div class="card">
       <div class="card-title">Vice Ispettori — disponibilità alloggio</div>
@@ -166,18 +263,15 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
         <table>
           <thead><tr>
             <th class="l">Reparto</th>
-            <th>Disponibile</th>
-            <th>Non disponibile</th>
-            <th>Non presente</th>
+            <th>Disponibile</th><th>Non disponibile</th><th>Non presente</th>
           </tr></thead>
           <tbody id="tvi"></tbody>
         </table>
       </div>
-      <div class="field" style="margin-top:1rem"><label>Note su Altro o situazioni particolari Vice Ispettori</label><textarea id="fvn" placeholder="Eventuali precisazioni su reparti non elencati o situazioni particolari..."></textarea></div>
+      <div class="field" style="margin-top:1rem"><label>Note su Altro o situazioni particolari Vice Ispettori</label><textarea id="fvn" placeholder="Eventuali precisazioni..."></textarea></div>
     </div>
   </div>
 
-  <!-- STEP 4: Analitica + invio -->
   <div class="step" id="s4">
     <div class="card">
       <div class="card-title">Dettaglio numerico alloggi</div>
@@ -189,14 +283,13 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
     <div class="msg" id="msg"></div>
   </div>
 
-  <!-- STEP 5: OK -->
   <div class="step" id="s5">
     <div class="card">
       <div class="success-screen">
         <span class="success-icon">&#x2705;</span>
         <div style="font-size:18px;font-weight:700;color:#1a1a5e;margin-bottom:.5rem">Compilazione inviata</div>
         <div style="font-size:14px;color:#555;margin-bottom:1.5rem" id="ok-msg">I dati sono stati registrati correttamente.</div>
-        <button class="btn btn-next" style="max-width:100%;width:100%" onclick="resetForm()">Nuova compilazione</button>
+        <button class="btn btn-next" style="width:100%" onclick="resetForm()">Nuova compilazione</button>
       </div>
     </div>
   </div>
@@ -211,44 +304,35 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjhLqxQDxewL4J4mVRf1FpAyUhhxWy9yqOwwr2BZW2ALZG48-7ZdDEVdy-nKMq20Q/exec';
 
-const PR = ["Agrigento","Alessandria","Ancona","Aosta","Arezzo","Ascoli Piceno","Asti","Avellino","Bari","Barletta-Andria-Trani","Belluno","Benevento","Bergamo","Biella","Bologna","Bolzano","Brescia","Brindisi","Cagliari","Caltanissetta","Campobasso","Caserta","Catania","Catanzaro","Chieti","Como","Cosenza","Cremona","Crotone","Cuneo","Enna","Fermo","Ferrara","Firenze","Foggia","Forlì-Cesena","Frosinone","Genova","Gorizia","Grosseto","Imperia","Isernia","La Spezia","L'Aquila","Latina","Lecce","Lecco","Livorno","Lodi","Lucca","Macerata","Mantova","Massa-Carrara","Matera","Messina","Milano","Modena","Monza e Brianza","Napoli","Novara","Nuoro","Oristano","Padova","Palermo","Parma","Pavia","Perugia","Pesaro e Urbino","Pescara","Piacenza","Pisa","Pistoia","Pordenone","Potenza","Prato","Ragusa","Ravenna","Reggio Calabria","Reggio Emilia","Rieti","Rimini","Roma","Rovigo","Salerno","Sassari","Savona","Siena","Siracusa","Sondrio","Sud Sardegna","Taranto","Teramo","Terni","Torino","Trapani","Trento","Treviso","Trieste","Udine","Varese","Venezia","Verbano-Cusio-Ossola","Vercelli","Verona","Vibo Valentia","Vicenza","Viterbo","Olbia"];
-
 const RM = new Set(["Roma","Milano","Napoli","Torino","Bologna","Firenze","Palermo","Catania","Venezia","Genova","Bari","Cagliari","Reggio Calabria","Padova","Trieste","Pescara","Perugia","Ancona","Potenza","Messina"]);
 const PA = new Set(["Roma","Milano","Venezia","Napoli","Torino","Bologna","Palermo","Catania","Bari","Genova","Cagliari","Brindisi","Pisa","Verona","Bergamo","Rimini","Treviso","Pescara","Reggio Calabria","Trieste","Ancona","Olbia"]);
 const PF = new Set(["Roma","Milano","Napoli","Torino","Bologna","Firenze","Venezia","Genova","Palermo","Catania","Bari","Reggio Calabria","Trieste","Verona","Padova","Brescia","Modena","Parma","Pisa","Ancona","Pescara","Perugia","Potenza","Messina","Cagliari","Sassari"]);
 const FR = new Set(["Trieste","Udine","Gorizia","Bolzano","Trento","Aosta","Cuneo","Imperia","Como","Varese","Verbano-Cusio-Ossola","Brindisi","Bari","Lecce","Venezia","Genova","Livorno","Ancona","Napoli","Palermo","Catania","Cagliari","Trapani","Agrigento","Reggio Calabria","Messina","Crotone"]);
-
 const RD = [{k:'q',l:'Questura'},{k:'c',l:'Comm.ti dist.'},{k:'ss',l:'Sez. Stradale'},{k:'sd',l:'Dist. Stradale'},{k:'rm',l:'Rep. Mobile'},{k:'pa',l:'Polaria'},{k:'pf',l:'Polfer'},{k:'fr',l:'Frontiera'},{k:'sc',l:'Scuola'},{k:'al',l:'Altro'}];
-
 const AAV = ['hp','hpm','ap','apm','np'];
 const VIV = ['disp','ndisp','np'];
 
-let stp = 0, arep = [], editMode = false;
+let stp = 0, arep = [];
 const TOT = 5;
 
-// Popola province
-PR.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; document.getElementById('fp').appendChild(o); });
-
-function getRepartiForProv(p) {
-  return { q:true, c:true, ss:true, sd:true, rm:RM.has(p), pa:PA.has(p), pf:PF.has(p), fr:FR.has(p), sc:false, al:true };
-}
-
+function gpr(p) { return {q:true,c:true,ss:true,sd:true,rm:RM.has(p),pa:PA.has(p),pf:PF.has(p),fr:FR.has(p),sc:false,al:true}; }
 function rl(k) { return (RD.find(x => x.k === k) || {l:k}).l; }
 function gv(n) { const e = document.querySelector('input[name="'+n+'"]:checked'); return e ? e.value : ''; }
 
 function onProvChange() {
   const p = document.getElementById('fp').value;
-  document.getElementById('dup-alert').innerHTML = '';
-  editMode = false;
+  const da = document.getElementById('dup-alert');
+  da.innerHTML = '';
+  if (!p) return;
 }
 
-function buildRepToggles(prov, checkedList) {
-  const map = getRepartiForProv(prov);
+function buildRepToggles(prov, checked) {
+  const map = gpr(prov);
   const c = document.getElementById('rep-toggles');
   c.innerHTML = '';
   document.getElementById('rep-sub').textContent = 'Reparti precompilati per ' + prov + ' — verifica e correggi se necessario';
   RD.forEach(r => {
-    const on = checkedList ? checkedList.includes(r.k) : map[r.k];
+    const on = checked ? checked.includes(r.k) : map[r.k];
     const lb = document.createElement('label');
     lb.className = 'rep-item' + (on ? ' checked' : '');
     lb.innerHTML = '<input type="checkbox" value="'+r.k+'"'+(on?' checked':'')+'>'+r.l;
@@ -282,8 +366,7 @@ function buildTables(rlist) {
 
 function upn() {
   document.getElementById('bb').style.visibility = (stp > 0 && stp < TOT) ? 'visible' : 'hidden';
-  const isLast = stp === TOT - 1;
-  document.getElementById('bn').style.display = (stp >= TOT - 1) ? 'none' : 'inline-block';
+  document.getElementById('bn').style.display = stp >= TOT - 1 ? 'none' : 'inline-block';
   document.getElementById('nav').style.display = stp >= TOT ? 'none' : 'flex';
   document.getElementById('pl').textContent = 'Passo ' + (stp+1) + ' di ' + TOT;
   const dots = document.getElementById('dots');
@@ -304,12 +387,13 @@ function gn() {
   if (!validate()) return;
   if (stp === 0) {
     const p = document.getElementById('fp').value;
-    arep = RD.filter(r => getRepartiForProv(p)[r.k]).map(r => r.k);
+    arep = RD.filter(r => gpr(p)[r.k]).map(r => r.k);
     buildRepToggles(p, arep);
     stp++; upn(); return;
   }
   if (stp === 1) {
     arep = getCheckedReparti();
+    if (arep.length === 0) { alert('Seleziona almeno un reparto'); return; }
     buildTables(arep);
     stp++; upn(); return;
   }
@@ -320,7 +404,7 @@ function gb() { if (stp > 0 && stp < TOT) { stp--; upn(); } }
 
 function submitForm() {
   const btn = document.getElementById('btnsubmit');
-  btn.disabled = true; btn.textContent = '⏳ Invio in corso...';
+  btn.disabled = true; btn.textContent = 'Invio in corso...';
   const payload = {
     prov: document.getElementById('fp').value,
     nome: document.getElementById('fn').value.trim(),
@@ -346,25 +430,25 @@ function submitForm() {
         document.getElementById('ok-msg').textContent = 'I dati di ' + payload.prov + ' sono stati registrati correttamente.';
       } else {
         msg.className = 'msg err'; msg.style.display = 'block';
-        msg.textContent = 'Errore durante l'invio. Riprova o scrivi a scuolepolizia@silp.cgil.it';
-        btn.disabled = false; btn.textContent = '✓ Invia compilazione';
+        msg.textContent = 'Errore durante l invio. Riprova o scrivi a scuolepolizia@silp.cgil.it';
+        btn.disabled = false; btn.textContent = 'Invia compilazione';
       }
     })
     .catch(() => {
       msg.className = 'msg err'; msg.style.display = 'block';
       msg.textContent = 'Errore di connessione. Controlla la rete e riprova.';
-      btn.disabled = false; btn.textContent = '✓ Invia compilazione';
+      btn.disabled = false; btn.textContent = 'Invia compilazione';
     });
 }
 
 function resetForm() {
-  stp = 0; arep = []; editMode = false;
+  stp = 0; arep = [];
   ['fn','fc','fem','fvn','fnt'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
   document.getElementById('fp').value = '';
   document.getElementById('dup-alert').innerHTML = '';
   document.getElementById('msg').style.display = 'none';
   document.getElementById('btnsubmit').disabled = false;
-  document.getElementById('btnsubmit').textContent = '✓ Invia compilazione';
+  document.getElementById('btnsubmit').textContent = 'Invia compilazione';
   document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
   document.querySelectorAll('input[type=number]').forEach(n => n.value = '');
   upn();
