@@ -360,7 +360,7 @@ function getUfficiForProv(p) {
   items.push({k:'frontiera', l:'Frontiera', cat:'Reparti Speciali', fixed:false, on:false});
   const SCUOLE_PROV = new Set(["Forlì-Cesena", "Caserta", "Roma", "Perugia", "Oristano", "Trieste", "Brescia", "Piacenza", "Vibo Valentia", "Pescara", "Verona", "Alessandria", "Campobasso"]);
   items.push({k:'scuola', l:'Scuola di Polizia', cat:'Reparti Speciali', fixed:false, on:SCUOLE_PROV.has(p)});
-  items.push({k:'altro', l:'Altro', cat:'Altro', fixed:false, on:true});
+  // voce Altro rimossa: i reparti sono quelli ufficiali del Riordino 2022
   
   return items;
 }
