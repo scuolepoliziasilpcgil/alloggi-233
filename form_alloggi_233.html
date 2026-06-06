@@ -358,8 +358,14 @@ function getUfficiForProv(p) {
   if(map.polaria) items.push({k:'polaria', l:'Polaria', cat:'Reparti Speciali', fixed:false, on:true});
   if(map.polfer) items.push({k:'polfer', l:'Polfer', cat:'Reparti Speciali', fixed:false, on:true});
   items.push({k:'frontiera', l:'Frontiera', cat:'Reparti Speciali', fixed:false, on:false});
+  const DIA_PROV = new Set(["Agrigento", "Bari", "Bologna", "Brescia", "Caltanissetta", "Catania", "Catanzaro", "Firenze", "Foggia", "Genova", "Lecce", "Messina", "Milano", "Napoli", "Padova", "Palermo", "Reggio Calabria", "Roma", "Salerno", "Torino", "Trapani", "Trieste"]);
+  const SISCO_PROV = new Set(["Ancona", "Bari", "Bologna", "Brescia", "Cagliari", "Caltanissetta", "Campobasso", "Catania", "Catanzaro", "Firenze", "Genova", "L'Aquila", "Lecce", "Messina", "Milano", "Napoli", "Palermo", "Perugia", "Potenza", "Reggio Calabria", "Roma", "Salerno", "Torino", "Trento", "Trieste", "Venezia"]);
+  const PG_PROV = new Set(["Ancona", "Bari", "Bologna", "Bolzano", "Brescia", "Cagliari", "Caltanissetta", "Campobasso", "Catania", "Catanzaro", "Firenze", "Genova", "L'Aquila", "Lecce", "Messina", "Milano", "Napoli", "Palermo", "Perugia", "Potenza", "Reggio Calabria", "Roma", "Salerno", "Torino", "Trento", "Trieste", "Venezia"]);
   const SCUOLE_PROV = new Set(["Forlì-Cesena", "Caserta", "Roma", "Perugia", "Oristano", "Trieste", "Brescia", "Piacenza", "Vibo Valentia", "Pescara", "Verona", "Alessandria", "Campobasso"]);
   items.push({k:'scuola', l:'Scuola di Polizia', cat:'Reparti Speciali', fixed:false, on:SCUOLE_PROV.has(p)});
+  items.push({k:'dia', l:'DIA', cat:'Reparti Speciali', fixed:false, on:DIA_PROV.has(p)});
+  items.push({k:'sisco', l:'SISCO', cat:'Reparti Speciali', fixed:false, on:SISCO_PROV.has(p)});
+  items.push({k:'pg_procura', l:'Nucleo PG presso Procura', cat:'Reparti Speciali', fixed:false, on:PG_PROV.has(p)});
   // voce Altro rimossa: i reparti sono quelli ufficiali del Riordino 2022
   
   return items;
