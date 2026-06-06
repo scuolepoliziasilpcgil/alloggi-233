@@ -43,6 +43,8 @@ td.cat{text-align:left;font-size:10px;padding-left:12px;color:#888;font-style:it
 tr.group-header td{background:#f0f4ff;color:#3a5abf;font-weight:600;font-size:11px;padding:5px 12px;border-bottom:1px solid #c5d3f5}
 tr:nth-child(even):not(.group-header) td:not(.cat){background:#fafafa}
 tr:hover:not(.group-header) td{background:#fff5f5}
+tr.missing-aa td{background:#ffe0e0 !important;border-bottom:2px solid #c8102e !important;}
+tr.missing-aa td:first-child::before{content:'⚠ ';color:#c8102e;}
 input[type=radio]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
 input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
 .rep-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -236,6 +238,9 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
     <div class="card">
       <div class="card-title">Allievi Agenti — tipo alloggio</div>
       <div class="card-sub">Indica per ogni ufficio il tipo di alloggio disponibile durante il periodo di prova</div>
+      <div style="background:#fff0f0;border:1.5px solid #c8102e;border-radius:8px;padding:.75rem 1rem;margin-bottom:1rem;font-size:13px;color:#c8102e;font-weight:600;">
+        &#x26A0;&#xFE0F; Tutti i campi sono obbligatori. Per ogni reparto seleziona il tipo di alloggio prima di procedere.
+      </div>
       <div class="legend">
         <div class="legend-title">&#x1F4CB; Legenda</div>
         <ol>
@@ -445,7 +450,7 @@ function buildTables(items) {
 
     const d = document.createElement('div');
     d.className = 'an-block';
-    d.innerHTML = '<div class="an-label">'+item.l+'</div><div class="an-opts"><label><input type="radio" name="an-'+item.k+'" value="limitato"> Limitati al numero degli agenti in arrivo</label><label><input type="radio" name="an-'+item.k+'" value="specifico"> Numero specifico: <input type="number" class="num-input" id="ann-'+item.k+'" min="0" max="500" placeholder="0"></label></div>';
+    d.innerHTML = '<div class="an-label">'+item.l+'</div><div class="an-opts"><label><input type="radio" name="an-'+item.k+'" value="limitato" checked> Limitati al numero degli agenti in arrivo</label><label><input type="radio" name="an-'+item.k+'" value="specifico"> Numero specifico: <input type="number" class="num-input" id="ann-'+item.k+'" min="0" max="500" placeholder="0"></label></div>';
     document.getElementById('anc').appendChild(d);
   });
 }
@@ -487,6 +492,27 @@ function gn() {
     if(activeItems.length===0){alert('Seleziona almeno un ufficio');return;}
     buildTables(activeItems);
     stp++;upn();return;
+  }
+  if(stp===2){
+    // Verifica che tutti i reparti abbiano un tipo alloggio selezionato
+    // Rimuove highlight precedenti
+    document.querySelectorAll('tr.missing-aa').forEach(r=>r.classList.remove('missing-aa'));
+    const mancanti = activeItems.filter(item => !document.querySelector('input[name="aa-'+item.k+'"]:checked'));
+    if(mancanti.length > 0){
+      // Evidenzia le righe mancanti in rosso
+      mancanti.forEach(item => {
+        const radios = document.querySelectorAll('input[name="aa-'+item.k+'"]');
+        if(radios.length > 0) {
+          const tr = radios[0].closest('tr');
+          if(tr) tr.classList.add('missing-aa');
+        }
+      });
+      // Scrolla alla prima riga mancante
+      const firstMissing = document.querySelector('tr.missing-aa');
+      if(firstMissing) firstMissing.scrollIntoView({behavior:'smooth', block:'center'});
+      alert('Seleziona il tipo di alloggio per tutti i reparti evidenziati in rosso prima di continuare.');
+      return;
+    }
   }
   stp++;upn();
 }
