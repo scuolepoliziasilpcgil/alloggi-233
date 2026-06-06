@@ -333,8 +333,12 @@ function getUfficiForProv(p) {
   
   // Commissariati specifici
   const comms = COMM[p] || [];
+  const dists = DIST[p] || [];
+  const distSet = new Set(dists.map(d=>d.toLowerCase()));
   comms.forEach(c => {
-    items.push({k:'comm_'+c.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase(), l:c, cat:'Commissariati dist.', fixed:false, on:true});
+    const hasOverlap = distSet.has(c.toLowerCase());
+    const label = hasOverlap ? c + ' (Comm.)' : c;
+    items.push({k:'comm_'+c.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase(), l:label, cat:'Commissariati dist.', fixed:false, on:true});
   });
   if(comms.length === 0) {
     items.push({k:'comm_generici', l:'Commissariati distaccati (generici)', cat:'Commissariati dist.', fixed:false, on:true});
@@ -344,9 +348,11 @@ function getUfficiForProv(p) {
   items.push({k:'str_sez', l:'Sezione Stradale', cat:'Polizia Stradale', fixed:true, on:true});
   
   // Distaccamenti stradali specifici
-  const dists = DIST[p] || [];
+  const commSet = new Set(comms.map(c=>c.toLowerCase()));
   dists.forEach(d => {
-    items.push({k:'dist_'+d.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase(), l:d, cat:'Dist. Stradali', fixed:false, on:true});
+    const hasOverlap = commSet.has(d.toLowerCase());
+    const label = hasOverlap ? d + ' (Dist. Str.)' : d;
+    items.push({k:'dist_'+d.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase(), l:label, cat:'Dist. Stradali', fixed:false, on:true});
   });
   
   // Reparti speciali
