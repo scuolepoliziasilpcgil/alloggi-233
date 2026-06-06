@@ -212,8 +212,13 @@ input[type=checkbox]{accent-color:#c8102e;width:14px;height:14px;cursor:pointer}
         </select>
       </div>
       <div id="dup-alert"></div>
-      <div class="field"><label>Cognome e nome<span class="req">*</span></label><input type="text" id="fn" placeholder="Es. Rossi Mario"></div>
-      <div class="field"><label>Cellulare<span class="req">*</span></label><input type="tel" id="fc" placeholder="Es. 333 1234567"></div>
+      <div style="background:#fff8e1;border:1.5px solid #ffe082;border-radius:8px;padding:.75rem 1rem;margin-bottom:1rem;font-size:12.5px;color:#7c5700;line-height:1.5">
+        <strong>&#x26A0;&#xFE0F; Attenzione ai duplicati</strong><br>
+        Se la tua provincia è già stata compilata, puoi procedere ugualmente. 
+        <strong>Verrà tenuto solo l'ultimo inserimento</strong>, che sovrascriverà automaticamente il precedente.
+      </div>
+      <div class="field"><label>Cognome e nome<span class="req">*</span></label><input type="text" id="fn" placeholder="Es. Rossi Mario" pattern="[A-Za-zÀ-ÿ\s\-']{2,}" title="Solo lettere e spazi"></div>
+      <div class="field"><label>Cellulare<span class="req">*</span></label><input type="tel" id="fc" placeholder="Es. 333 1234567" pattern="[0-9\s\+]{6,15}" title="Solo numeri"></div>
       <div class="field"><label>Email</label><input type="email" id="fem" placeholder="Es. nome@silp.cgil.it"></div>
     </div>
   </div>
@@ -434,7 +439,7 @@ function buildTables(items) {
 
     const d = document.createElement('div');
     d.className = 'an-block';
-    d.innerHTML = '<div class="an-label">'+item.l+'</div><div class="an-opts"><label><input type="radio" name="an-'+item.k+'" value="limitato"> Limitati al numero degli agenti in arrivo</label><label><input type="radio" name="an-'+item.k+'" value="specifico"> Numero specifico: <input type="number" class="num-input" id="ann-'+item.k+'" min="0" max="500" placeholder="0"></label><label><input type="radio" name="an-'+item.k+'" value="np"> Non presente nella provincia</label></div>';
+    d.innerHTML = '<div class="an-label">'+item.l+'</div><div class="an-opts"><label><input type="radio" name="an-'+item.k+'" value="limitato"> Limitati al numero degli agenti in arrivo</label><label><input type="radio" name="an-'+item.k+'" value="specifico"> Numero specifico: <input type="number" class="num-input" id="ann-'+item.k+'" min="0" max="500" placeholder="0"></label></div>';
     document.getElementById('anc').appendChild(d);
   });
 }
@@ -451,8 +456,14 @@ function upn() {
 function validate() {
   if(stp===0){
     if(!document.getElementById('fp').value){alert('Seleziona la provincia');return false;}
-    if(!document.getElementById('fn').value.trim()){alert('Inserisci cognome e nome');return false;}
-    if(!document.getElementById('fc').value.trim()){alert('Inserisci il cellulare');return false;}
+    const nome = document.getElementById('fn').value.trim();
+    if(!nome){alert('Inserisci cognome e nome');return false;}
+    if(!/^[A-Za-z\u00C0-\u024F\s\-\']{2,}$/.test(nome)){alert('Cognome e nome: solo lettere');return false;}
+    const cell = document.getElementById('fc').value.trim();
+    if(!cell){alert('Inserisci il cellulare');return false;}
+    if(!/^[\d\s\+\-]{6,15}$/.test(cell)){alert('Cellulare: solo numeri');return false;}
+    const mail = document.getElementById('fem').value.trim();
+    if(mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){alert('Indirizzo email non valido');return false;}
   }
   return true;
 }
