@@ -334,22 +334,17 @@ function getUfficiForProv(p) {
   // Commissariati specifici
   const comms = COMM[p] || [];
   const dists = DIST[p] || [];
-  const distSet = new Set(dists.map(d=>d.toLowerCase()));
   comms.forEach(c => {
-    const hasOverlap = distSet.has(c.toLowerCase());
-    const label = hasOverlap ? c + ' (Comm.)' : c;
-    items.push({k:'comm_'+c.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase(), l:label, cat:'Commissariati dist.', fixed:false, on:true});
+    items.push({k:'comm_'+c.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase(), l:c, cat:'Commissariati dist.', fixed:false, on:true});
   });
   // nessun commissariato distaccato per questa provincia
   
   // Sez. Stradale
   items.push({k:'str_sez', l:'Sezione Stradale', cat:'Polizia Stradale', fixed:true, on:true});
   
-  // Distaccamenti stradali specifici
-  const commSet = new Set(comms.map(c=>c.toLowerCase()));
+  // Distaccamenti stradali specifici - suffisso (Str.) sempre presente
   dists.forEach(d => {
-    const hasOverlap = commSet.has(d.toLowerCase());
-    const label = hasOverlap ? d + ' (Dist. Str.)' : d;
+    const label = d + ' (Str.)';
     items.push({k:'dist_'+d.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase(), l:label, cat:'Dist. Stradali', fixed:false, on:true});
   });
   
