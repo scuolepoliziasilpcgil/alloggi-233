@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SILP CGIL – Ricognizione Alloggiativa 233°</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#1a1a1a}
+.wrap{max-width:680px;margin:0 auto;padding:1.5rem 1rem}
+.hdr{background:#c8102e;color:#fff;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:14px}
+.hdr-logo{width:48px;height:48px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hdr-logo span{color:#c8102e;font-size:9px;font-weight:700;text-align:center;line-height:1.2}
+.hdr-title{font-size:16px;font-weight:600}
+.hdr-sub{font-size:12px;opacity:.85;margin-top:2px}
+.card{background:#fff;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card h2{font-size:15px;font-weight:600;color:#c8102e;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid #f0f0f0}
+.field{margin-bottom:.9rem}
+.field label{display:block;font-size:13px;color:#555;margin-bottom:4px;font-weight:500}
+.field input,.field select,.field textarea{width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:7px;font-size:14px;font-family:inherit;background:#fafafa}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#c8102e;background:#fff}
+.field textarea{min-height:70px;resize:vertical}
+.req{color:#c8102e;margin-left:2px}
+.legend{background:#fff8f8;border:1px solid #f0d0d0;border-radius:8px;padding:.85rem 1rem;margin-bottom:1rem;font-size:12px;color:#666}
+.legend strong{display:block;margin-bottom:5px;color:#c8102e;font-size:13px}
+.legend ol{padding-left:1.2rem;line-height:1.9}
+.table-wrap{overflow-x:auto;margin-bottom:.5rem}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:520px}
+th{background:#c8102e;color:#fff;padding:7px 8px;text-align:center;font-weight:500;white-space:nowrap;font-size:11px}
+th.l{text-align:left;min-width:110px}
+td{padding:5px 4px;border-bottom:1px solid #f0f0f0;text-align:center}
+td.l{text-align:left;font-size:12px;padding-left:8px;color:#333}
+tr:nth-child(even){background:#fafafa}
+input[type=radio]{accent-color:#c8102e;width:14px;height:14px}
+.an-row{margin-bottom:.85rem;padding-bottom:.85rem;border-bottom:1px solid #f0f0f0}
+.an-row:last-of-type{border-bottom:none}
+.an-label{font-size:13px;font-weight:500;color:#333;margin-bottom:6px}
+.an-opts{display:flex;flex-direction:column;gap:6px}
+.an-opts label{display:flex;align-items:center;gap:8px;font-size:13px;color:#444;cursor:pointer}
+.an-opts input[type=radio]{flex-shrink:0}
+.btn-wrap{text-align:center;margin-top:1.5rem}
+.btn-submit{background:#c8102e;color:#fff;border:none;padding:12px 40px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;max-width:300px}
+.btn-submit:hover{background:#a80d26}
+.btn-submit:disabled{background:#aaa;cursor:not-allowed}
+.msg{display:none;padding:1rem;border-radius:8px;margin-top:1rem;text-align:center;font-size:14px}
+.msg.ok{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9}
+.msg.err{background:#ffebee;color:#c62828;border:1px solid #ffcdd2}
+.dots{display:flex;justify-content:center;gap:6px;margin-bottom:1.25rem}
+.dot{width:8px;height:8px;border-radius:50%;background:#ddd}
+.dot.done{background:#c8102e}.dot.cur{background:#c8102e;outline:3px solid rgba(200,16,46,.2)}
+.step{display:none}.step.on{display:block}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem}
+.btn-nav{padding:9px 22px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500}
+.btn-back{background:#fff;border:1px solid #ddd;color:#333}
+.btn-next{background:#c8102e;border:none;color:#fff}
+.prog{font-size:12px;color:#888}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <div class="hdr-logo"><span>SILP CGIL</span></div>
+    <div>
+      <div class="hdr-title">Ricognizione Alloggiativa Provinciale</div>
+      <div class="hdr-sub">233° Corso Allievi Agenti · Coordinamento Nazionale Scuole</div>
+    </div>
+  </div>
+
+  <div class="dots" id="dots"></div>
+
+  <form id="theform">
+
+    <!-- STEP 0 -->
+    <div class="step on" id="s0">
+      <div class="card">
+        <h2>Identificazione compilatore</h2>
+        <div class="field">
+          <label>Provincia<span class="req">*</span></label>
+          <select id="fp" required>
+            <option value="">— Seleziona la provincia —</option>
+          </select>
+        </div>
+        <div class="field"><label>Cognome e nome<span class="req">*</span></label><input type="text" id="fn" placeholder="Es. Rossi Mario" required></div>
+        <div class="field"><label>Cellulare<span class="req">*</span></label><input type="tel" id="fc" placeholder="Es. 333 1234567" required></div>
+        <div class="field"><label>Email</label><input type="email" id="fem" placeholder="Es. nome@silp.cgil.it"></div>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step" id="s1">
+      <div class="card">
+        <h2>Allievi Agenti — tipo alloggio per reparto</h2>
+        <div class="legend">
+          <strong>Legenda colonne</strong>
+          <ol>
+            <li>Hotel da lasciare dopo il periodo di prova</li>
+            <li>Hotel confermabile oltre il periodo di prova</li>
+            <li>Alloggio di servizio da liberare dopo il periodo di prova</li>
+            <li>Alloggio di servizio utilizzabile anche dopo il periodo di prova</li>
+            <li>Reparto non presente nella provincia</li>
+          </ol>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th class="l">Reparto</th>
+              <th>1 Hotel prova</th><th>2 Hotel perm.</th><th>3 All. prova</th><th>4 All. perm.</th><th>5 Non presente</th>
+            </tr></thead>
+            <tbody id="taa"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step" id="s2">
+      <div class="card">
+        <h2>Vice Ispettori — disponibilità alloggio</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th class="l">Reparto</th>
+              <th>Disponibile</th><th>Non disponibile</th><th>Non presente</th>
+            </tr></thead>
+            <tbody id="tvi"></tbody>
+          </table>
+        </div>
+        <div class="field" style="margin-top:.85rem"><label>Note su Altro o situazioni particolari Vice Ispettori</label><textarea id="fvn" placeholder="Eventuali precisazioni..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step" id="s3">
+      <div class="card">
+        <h2>Dettaglio numerico alloggi</h2>
+        <div id="anc"></div>
+        <div class="field"><label>Situazioni particolari o note finali</label><textarea id="fnt" placeholder="Accordi locali, criticità, informazioni utili per i colleghi..."></textarea></div>
+      </div>
+      <div class="btn-wrap">
+        <button type="button" class="btn-submit" id="btnsubmit" onclick="submitForm()">Invia compilazione ✓</button>
+      </div>
+      <div class="msg" id="msg"></div>
+    </div>
+
+  </form>
+
+  <div class="nav" id="nav">
+    <button type="button" class="btn-nav btn-back" id="bb" onclick="gb()" style="visibility:hidden">← Indietro</button>
+    <span class="prog" id="pl">Passo 1 di 4</span>
+    <button type="button" class="btn-nav btn-next" id="bn" onclick="gn()">Avanti →</button>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjhLqxQDxewL4J4mVRf1FpAyUhhxWy9yqOwwr2BZW2ALZG48-7ZdDEVdy-nKMq20Q/exec';
+const PR = ["Agrigento","Alessandria","Ancona","Aosta","Arezzo","Ascoli Piceno","Asti","Avellino","Bari","Barletta-Andria-Trani","Belluno","Benevento","Bergamo","Biella","Bologna","Bolzano","Brescia","Brindisi","Cagliari","Caltanissetta","Campobasso","Caserta","Catania","Catanzaro","Chieti","Como","Cosenza","Cremona","Crotone","Cuneo","Enna","Fermo","Ferrara","Firenze","Foggia","Forlì-Cesena","Frosinone","Genova","Gorizia","Grosseto","Imperia","Isernia","La Spezia","L'Aquila","Latina","Lecce","Lecco","Livorno","Lodi","Lucca","Macerata","Mantova","Massa-Carrara","Matera","Messina","Milano","Modena","Monza e Brianza","Napoli","Novara","Nuoro","Oristano","Padova","Palermo","Parma","Pavia","Perugia","Pesaro e Urbino","Pescara","Piacenza","Pisa","Pistoia","Pordenone","Potenza","Prato","Ragusa","Ravenna","Reggio Calabria","Reggio Emilia","Rieti","Rimini","Roma","Rovigo","Salerno","Sassari","Savona","Siena","Siracusa","Sondrio","Sud Sardegna","Taranto","Teramo","Terni","Torino","Trapani","Trento","Treviso","Trieste","Udine","Varese","Venezia","Verbano-Cusio-Ossola","Vercelli","Verona","Vibo Valentia","Vicenza","Viterbo","Olbia"];
+const RD = [{k:'q',l:'Questura'},{k:'c',l:'Comm.ti dist.'},{k:'ss',l:'Sez. Stradale'},{k:'sd',l:'Dist. Stradale'},{k:'rm',l:'Rep. Mobile'},{k:'pa',l:'Polaria'},{k:'pf',l:'Polfer'},{k:'fr',l:'Frontiera'},{k:'sc',l:'Scuola'},{k:'al',l:'Altro'}];
+const AAV = ['hp','hpm','ap','apm','np'];
+const VIV = ['disp','ndisp','np'];
+
+let stp = 0;
+const TOT = 4;
+
+PR.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; document.getElementById('fp').appendChild(o); });
+
+RD.forEach(r => {
+  const ra = document.createElement('tr');
+  ra.innerHTML = '<td class="l">'+r.l+'</td>' + AAV.map(v => '<td><input type="radio" name="aa-'+r.k+'" value="'+v+'"></td>').join('');
+  document.getElementById('taa').appendChild(ra);
+  const rv = document.createElement('tr');
+  rv.innerHTML = '<td class="l">'+r.l+'</td>' + VIV.map(v => '<td><input type="radio" name="vi-'+r.k+'" value="'+v+'"></td>').join('');
+  document.getElementById('tvi').appendChild(rv);
+  const d = document.createElement('div');
+  d.className = 'an-row';
+  d.innerHTML = '<div class="an-label">'+r.l+'</div><div class="an-opts"><label><input type="radio" name="an-'+r.k+'" value="limitato"> Limitati al numero degli agenti in arrivo</label><label><input type="radio" name="an-'+r.k+'" value="specifico"> Numero specifico: <input type="number" id="ann-'+r.k+'" min="0" max="500" placeholder="0" style="width:60px;margin-left:6px;display:inline-block;padding:3px 6px;border:1px solid #ddd;border-radius:5px"></label><label><input type="radio" name="an-'+r.k+'" value="np"> Non presente nella provincia</label></div>';
+  document.getElementById('anc').appendChild(d);
+});
+
+function upn() {
+  document.getElementById('bb').style.visibility = stp > 0 ? 'visible' : 'hidden';
+  document.getElementById('bn').style.display = stp === TOT - 1 ? 'none' : 'inline-block';
+  document.getElementById('pl').textContent = 'Passo ' + (stp+1) + ' di ' + TOT;
+  document.getElementById('nav').style.display = stp === TOT ? 'none' : 'flex';
+  const dots = document.getElementById('dots');
+  dots.innerHTML = Array.from({length:TOT}, (_,i) => '<div class="dot'+(i<stp?' done':i===stp?' cur':'')+'"></div>').join('');
+  for (let i = 0; i < TOT; i++) { const el = document.getElementById('s'+i); if(el) el.classList.toggle('on', i === stp); }
+}
+
+function gv(n) { const e = document.querySelector('input[name="'+n+'"]:checked'); return e ? e.value : ''; }
+
+function gn() {
+  if (stp === 0) {
+    if (!document.getElementById('fp').value) { alert('Seleziona la provincia'); return; }
+    if (!document.getElementById('fn').value.trim()) { alert('Inserisci il tuo nome'); return; }
+    if (!document.getElementById('fc').value.trim()) { alert('Inserisci il cellulare'); return; }
+  }
+  stp++; upn();
+}
+
+function gb() { if (stp > 0) { stp--; upn(); } }
+
+function submitForm() {
+  const btn = document.getElementById('btnsubmit');
+  btn.disabled = true; btn.textContent = 'Invio in corso...';
+  const payload = {
+    prov: document.getElementById('fp').value,
+    nome: document.getElementById('fn').value.trim(),
+    cell: document.getElementById('fc').value.trim(),
+    mail: document.getElementById('fem').value.trim(),
+    aa: Object.fromEntries(RD.map(r => [r.k, gv('aa-'+r.k)])),
+    vi: Object.fromEntries(RD.map(r => [r.k, gv('vi-'+r.k)])),
+    an: Object.fromEntries(RD.map(r => { const v = gv('an-'+r.k); const n = document.getElementById('ann-'+r.k); return [r.k, v === 'specifico' && n ? v+':'+n.value : v]; })),
+    vi_note: document.getElementById('fvn').value.trim(),
+    note: document.getElementById('fnt').value.trim()
+  };
+  const msg = document.getElementById('msg');
+  fetch(SCRIPT_URL, {method:'POST', body: JSON.stringify(payload)})
+    .then(r => r.json())
+    .then(d => {
+      if (d.status === 'ok') {
+        msg.className = 'msg ok'; msg.style.display = 'block';
+        msg.textContent = '✓ Compilazione inviata correttamente. Grazie!';
+        btn.style.display = 'none';
+        document.getElementById('nav').style.display = 'none';
+      } else {
+        msg.className = 'msg err'; msg.style.display = 'block';
+        msg.textContent = 'Errore durante l\'invio. Riprova o contatta scuolepolizia@silp.cgil.it';
+        btn.disabled = false; btn.textContent = 'Invia compilazione ✓';
+      }
+    })
+    .catch(() => {
+      msg.className = 'msg err'; msg.style.display = 'block';
+      msg.textContent = 'Errore di connessione. Controlla la rete e riprova.';
+      btn.disabled = false; btn.textContent = 'Invia compilazione ✓';
+    });
+}
+
+upn();
+</script>
+</body>
+</html>
