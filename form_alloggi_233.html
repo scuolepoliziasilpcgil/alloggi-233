@@ -360,7 +360,8 @@ function getUfficiForProv(p) {
   if(map.polaria) items.push({k:'polaria', l:'Polaria', cat:'Reparti Speciali', fixed:false, on:true});
   if(map.polfer) items.push({k:'polfer', l:'Polfer', cat:'Reparti Speciali', fixed:false, on:true});
   items.push({k:'frontiera', l:'Frontiera', cat:'Reparti Speciali', fixed:false, on:false});
-  items.push({k:'scuola', l:'Scuola', cat:'Reparti Speciali', fixed:false, on:false});
+  const SCUOLE_PROV = new Set(["Forlì-Cesena", "Caserta", "Roma", "Perugia", "Oristano", "Trieste", "Brescia", "Piacenza", "Vibo Valentia", "Pescara", "Verona", "Alessandria", "Campobasso"]);
+  items.push({k:'scuola', l:'Scuola di Polizia', cat:'Reparti Speciali', fixed:false, on:SCUOLE_PROV.has(p)});
   items.push({k:'altro', l:'Altro', cat:'Altro', fixed:false, on:true});
   
   return items;
