@@ -91,16 +91,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 </div>
 
-<div style="position:fixed;bottom:8px;right:10px;font-size:10px;color:#bbb;pointer-events:none">rev 1</div>
+<div style="position:fixed;bottom:8px;right:10px;font-size:10px;color:#bbb;pointer-events:none">rev 2</div>
 
 <script>
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrTBe54ad0ugFLtatB05jDzXO_MW4U1J2o4jGAJbGVe85pBbdpCR1n-hWE3t7se8xvWkCq0hbXrssx/pub?gid=97110302&single=true&output=csv';
 
 const TUTTE_PROVINCE = ["Agrigento","Alessandria","Ancona","Aosta","Arezzo","Ascoli Piceno","Asti","Avellino","Bari","Barletta-Andria-Trani","Belluno","Benevento","Bergamo","Biella","Bologna","Bolzano","Brescia","Brindisi","Cagliari","Caltanissetta","Campobasso","Caserta","Catania","Catanzaro","Chieti","Como","Cosenza","Cremona","Crotone","Cuneo","Enna","Fermo","Ferrara","Firenze","Foggia","Forlì-Cesena","Frosinone","Genova","Gorizia","Grosseto","Imperia","Isernia","La Spezia","L'Aquila","Latina","Lecce","Lecco","Livorno","Lodi","Lucca","Macerata","Mantova","Massa-Carrara","Matera","Messina","Milano","Modena","Monza e Brianza","Napoli","Novara","Nuoro","Oristano","Padova","Palermo","Parma","Pavia","Perugia","Pesaro e Urbino","Pescara","Piacenza","Pisa","Pistoia","Pordenone","Potenza","Prato","Ragusa","Ravenna","Reggio Calabria","Reggio Emilia","Rieti","Rimini","Roma","Rovigo","Salerno","Sassari","Savona","Siena","Siracusa","Sondrio","Sud Sardegna","Taranto","Teramo","Terni","Torino","Trapani","Trento","Treviso","Trieste","Udine","Varese","Venezia","Verbano-Cusio-Ossola","Vercelli","Verona","Vibo Valentia","Vicenza","Viterbo"];
 
-const AA_LABELS = {'apm':'Alloggio servizio — permanente','ap':'Alloggio servizio — periodo di prova','hpm':'Hotel — anche oltre il periodo di prova','hp':'Hotel — solo periodo di prova'};
-const AA_CLASS  = {'apm':'b-apm','ap':'b-ap','hpm':'b-hpm','hp':'b-hp'};
 const DIS_KW = ['commissariato distaccato','distaccamento di polizia stradale','sottosez','nucleo artificieri','reparto volo','squadra cinofili','frontiera c/o scalo','barga','gela','niscemi','cortina','palma di montechiaro','roghudi','valico','traforo','autostradale'];
+
+const CAT_ORDER = ['Questura','Commissariato','Polizia Stradale','Distaccamento Stradale','Polfer','Polizia Ferroviaria','Frontiera','Scuola di Polizia','DIA','SISCO','Nucleo PG / Procura','Reparti Speciali'];
 
 let allData = [];
 let selected = null;
@@ -117,44 +117,81 @@ function parseCSV(text){
     }
     cols.push(cur.trim());
     return cols;
-  }).filter(r=>r.length>=3&&r[1]&&r[1].trim());
+  }).filter(r=>r.length>=3&&r[0]&&r[0].trim());
 }
 
-function safeJSON(s){try{return JSON.parse(s);}catch(e){return {};}}
+function parseItDate(s){
+  const m=(s||'').match(/(\d{2})\/(\d{2})\/(\d{4}),?\s*(\d{2}):(\d{2}):(\d{2})/);
+  if(!m) return 0;
+  return new Date(+m[3],+m[2]-1,+m[1],+m[4],+m[5],+m[6]).getTime();
+}
 
-function dominantAA(aa){
-  const vals=Object.values(aa);
-  if(!vals.length)return '';
-  const c={};vals.forEach(v=>c[v]=(c[v]||0)+1);
-  return Object.entries(c).sort((a,b)=>b[1]-a[1])[0][0];
+function tipoInfo(raw){
+  const l=(raw||'').toLowerCase();
+  if(l.includes('hotel')){
+    return l.includes('anche oltre')?{cls:'hpm',label:'Hotel — anche oltre il periodo di prova'}:{cls:'hp',label:'Hotel — solo periodo di prova'};
+  }
+  if(l.includes('alloggio')){
+    return l.includes('anche oltre')?{cls:'apm',label:'Alloggio servizio — anche oltre il periodo di prova'}:{cls:'ap',label:'Alloggio servizio — solo periodo di prova'};
+  }
+  return {cls:'empty',label:raw||'—'};
+}
+
+function dispText(s){
+  s=(s||'').trim();
+  if(!s) return '—';
+  if(/^n\.?\s*specifico/i.test(s)) return s.replace(/^n\.?\s*specifico:?\s*/i,'N. ');
+  if(/limitato/i.test(s)) return 'Limitato';
+  return s;
 }
 
 function isDis(label){
-  const l=label.toLowerCase();
+  const l=(label||'').toLowerCase();
   return DIS_KW.some(k=>l.includes(k));
 }
 
-function getCat(u){
-  const ul=u.toLowerCase();
-  if(ul.includes('questura'))return 'Questura';
-  if(ul.includes('sezione stradale')||ul.includes('(str.)'))return 'Polizia Stradale';
-  if(ul.includes('polfer'))return 'Polizia Ferroviaria';
-  if(ul.includes('frontiera')||ul.includes('ufficio misto'))return 'Frontiera';
-  if(ul.includes('scuola')||ul.includes('istituto')||ul.includes('centro addestramento')||ul.includes('polgai'))return 'Scuola';
-  if(ul.includes('dia')||ul.includes('sisco')||ul.includes('procura')||ul.includes('cibernetica')||ul.includes('reparto mobile')||ul.includes('squadra')||ul.includes('nucleo')||ul.includes('cinofili')||ul.includes('artificieri')||ul.includes('tiratori')||ul.includes('nocs')||ul.includes('volo')||ul.includes('rpc')||ul.includes('casv')||ul.includes('cnes'))return 'Reparti Speciali';
-  return 'Commissariati';
+function catRank(c){
+  const i=CAT_ORDER.indexOf(c);
+  return i===-1?999:i;
+}
+
+function dominantCls(reparti){
+  const c={};
+  reparti.forEach(x=>{const info=tipoInfo(x.tipoRaw);c[info.cls]=(c[info.cls]||0)+1;});
+  const entries=Object.entries(c);
+  if(!entries.length)return 'empty';
+  return entries.sort((a,b)=>b[1]-a[1])[0][0];
 }
 
 function loadData(){
   fetch(SHEET_URL)
     .then(r=>r.text())
     .then(text=>{
-      const rows=parseCSV(text);
-      // Prendo solo l'ultima riga per provincia (sovrascrittura)
+      const rows=parseCSV(text).map(r=>{
+        const data=(r[6]||'').trim();
+        return {
+          prov:(r[0]||'').trim(),
+          cat:(r[1]||'').trim()||'Altro',
+          ufficio:(r[2]||'').trim(),
+          tipoRaw:(r[3]||'').trim(),
+          disp:(r[4]||'').trim(),
+          compilatore:(r[5]||'').trim(),
+          data,
+          ts:parseItDate(data)
+        };
+      }).filter(r=>r.prov);
+
+      // Sovrascrittura: per ogni provincia tengo solo le righe della compilazione più recente
+      const latestTs={};
+      rows.forEach(r=>{if(!(r.prov in latestTs)||r.ts>latestTs[r.prov])latestTs[r.prov]=r.ts;});
+      const filtered=rows.filter(r=>r.ts===latestTs[r.prov]);
+
       const map={};
-      rows.forEach(r=>{
-        const prov=(r[1]||'').trim();
-        if(prov) map[prov]={data:(r[0]||'').trim(),prov,nome:(r[2]||'').trim(),cell:(r[3]||'').trim(),email:(r[4]||'').trim(),uffici:(r[5]||'').split(',').map(s=>s.trim()).filter(Boolean),aa:safeJSON(r[6]||'{}'),an:safeJSON(r[7]||'{}'),note:(r[8]||'').trim()};
+      filtered.forEach(r=>{
+        if(!map[r.prov])map[r.prov]={prov:r.prov,compilatore:r.compilatore,data:r.data,reparti:[]};
+        if(r.compilatore)map[r.prov].compilatore=r.compilatore;
+        if(r.data)map[r.prov].data=r.data;
+        map[r.prov].reparti.push(r);
       });
       allData=Object.values(map);
 
@@ -178,11 +215,11 @@ function renderCompiled(){
   if(!allData.length){grid.innerHTML='<div class="loading">Nessuna provincia ha compilato.</div>';return;}
   const sorted=[...allData].sort((a,b)=>a.prov.localeCompare(b.prov,'it'));
   grid.innerHTML=sorted.map(d=>{
-    const dom=dominantAA(d.aa);
-    const dotClass='dot-'+(dom||'empty');
+    const dotClass='dot-'+dominantCls(d.reparti);
+    const cognome=d.compilatore.trim().split(/\s+/).slice(-1)[0]||'';
     return `<div class="pcard${selected===d.prov?' active':''}" onclick="showDetail('${d.prov.replace(/'/g,"\\'")}')">
       <div class="pcard-name"><span class="pcard-badge ${dotClass}"></span>${d.prov}</div>
-      <div class="pcard-meta">${d.uffici.length} reparti · ${d.nome.split(' ').slice(-1)[0]}</div>
+      <div class="pcard-meta">${d.reparti.length} reparti · ${cognome}</div>
     </div>`;
   }).join('');
 }
@@ -198,43 +235,35 @@ function showDetail(prov){
   if(!d)return;
   renderCompiled();
 
-  const catOrder=['Questura','Commissariati','Polizia Stradale','Polizia Ferroviaria','Frontiera','Scuola','Reparti Speciali'];
   const cats={};
-  d.uffici.forEach(u=>{const cat=getCat(u);if(!cats[cat])cats[cat]=[];cats[cat].push(u);});
+  d.reparti.forEach(r=>{if(!cats[r.cat])cats[r.cat]=[];cats[r.cat].push(r);});
+  const catKeys=Object.keys(cats).sort((a,b)=>catRank(a)-catRank(b)||a.localeCompare(b,'it'));
 
   let html='';
-  catOrder.forEach(cat=>{
-    if(!cats[cat])return;
+  catKeys.forEach(cat=>{
     html+=`<div class="cat-header">${cat}</div>`;
-    cats[cat].forEach(u=>{
-      const aaVal=d.aa[u]||'';
-      const anVal=d.an[u]||'';
-      const aaLabel=AA_LABELS[aaVal]||'—';
-      const aaClass=AA_CLASS[aaVal]||'b-empty';
-      const anText=anVal.startsWith('specifico:')?'N. '+anVal.split(':')[1]:(anVal==='limitato'?'Limitato':'—');
-      const dis=isDis(u);
+    cats[cat].forEach(r=>{
+      const info=tipoInfo(r.tipoRaw);
+      const dis=isDis(r.ufficio);
       const disBadge=dis?'<span class="dis-badge">Disagiata</span>':'';
       html+=`<div class="rep-row${dis?' disagiata':''}">
-        <div class="rep-name">${u}${disBadge}</div>
-        <span class="rep-badge ${aaClass}">${aaLabel}</span>
-        <div class="rep-an">${anText}</div>
+        <div class="rep-name">${r.ufficio}${disBadge}</div>
+        <span class="rep-badge b-${info.cls}">${info.label}</span>
+        <div class="rep-an">${dispText(r.disp)}</div>
       </div>`;
     });
   });
-
-  const noteHtml=d.note?`<div class="note-box"><strong>Note: </strong>${d.note}</div>`:'';
 
   document.getElementById('detail-panel').innerHTML=`
     <div class="detail">
       <div class="detail-header">
         <div>
           <div class="detail-prov">${d.prov}</div>
-          <div class="detail-meta">Compilato da <strong>${d.nome}</strong>${d.cell?' · '+d.cell:''} · ${d.data}</div>
+          <div class="detail-meta">Compilato da <strong>${d.compilatore}</strong> · ${d.data}</div>
         </div>
         <button class="close-btn" onclick="closeDetail()">✕ chiudi</button>
       </div>
       <div class="rep-list">${html}</div>
-      ${noteHtml}
     </div>`;
 
   window.scrollTo({top:0,behavior:'smooth'});
