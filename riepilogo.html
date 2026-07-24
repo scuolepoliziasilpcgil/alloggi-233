@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riepilogo Alloggi 233° Corso — Silp Cgil</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f6f8;color:#1a1a1a;min-height:100vh}
+  .top-bar{background:#005CA9;padding:1rem 1.5rem;display:flex;align-items:center;gap:12px}
+  .top-bar h1{color:#fff;font-size:17px;font-weight:500}
+  .top-bar p{color:rgba(255,255,255,0.75);font-size:13px;margin-top:2px}
+  .container{max-width:1100px;margin:0 auto;padding:1.5rem}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+  .stat{background:#fff;border-radius:10px;padding:1rem 1.25rem;border:0.5px solid #e0e0e0}
+  .stat-label{font-size:12px;color:#888;margin-bottom:4px}
+  .stat-value{font-size:24px;font-weight:500;color:#1a1a1a}
+  .search-bar{margin-bottom:1rem}
+  .search-bar input{width:100%;padding:10px 14px;border:0.5px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;font-size:14px;outline:none}
+  .search-bar input:focus{border-color:#005CA9}
+  .province-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:1.5rem}
+  .pcard{background:#fff;border:0.5px solid #e0e0e0;border-radius:8px;padding:12px;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
+  .pcard:hover{border-color:#005CA9;box-shadow:0 2px 8px rgba(0,92,169,0.1)}
+  .pcard.active{border:1.5px solid #005CA9;background:#f0f7ff}
+  .pcard-name{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:4px}
+  .pcard-info{font-size:11px;color:#888}
+  .pcard-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle}
+  .dot-apm{background:#3B6D11}.dot-hp{background:#854F0B}.dot-ap{background:#185FA5}.dot-hpm{background:#185FA5}
+  .detail{background:#fff;border:0.5px solid #e0e0e0;border-radius:12px;padding:1.5rem;margin-top:0}
+  .detail-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem}
+  .detail-title{font-size:20px;font-weight:500;color:#1a1a1a}
+  .detail-sub{font-size:13px;color:#888;margin-top:3px}
+  .close-btn{font-size:13px;color:#005CA9;cursor:pointer;border:0.5px solid #005CA9;background:none;padding:4px 12px;border-radius:6px}
+  .close-btn:hover{background:#f0f7ff}
+  .rep-table{width:100%;border-collapse:collapse;font-size:13px}
+  .rep-table th{text-align:left;padding:6px 10px;font-weight:500;color:#888;border-bottom:1px solid #f0f0f0;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  .rep-table td{padding:8px 10px;border-bottom:0.5px solid #f5f5f5;color:#1a1a1a;vertical-align:top}
+  .rep-table tr:last-child td{border-bottom:none}
+  .rep-table tr:hover td{background:#fafafa}
+  .badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:500;white-space:nowrap}
+  .b-apm{background:#EAF3DE;color:#3B6D11}
+  .b-ap{background:#E6F1FB;color:#185FA5}
+  .b-hpm{background:#DDEBF7;color:#185FA5}
+  .b-hp{background:#FAEEDA;color:#854F0B}
+  .b-empty{background:#f5f5f5;color:#aaa}
+  .cat-row td{background:#f8f8f8;font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px}
+  .note-box{margin-top:1rem;background:#f8f9fa;border-radius:8px;padding:12px 14px;font-size:13px;color:#555;border-left:3px solid #005CA9;line-height:1.6}
+  .note-box strong{color:#333}
+  .disagiata{display:inline-block;background:#FFE033;color:#000;font-size:10px;font-weight:700;border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:middle}
+  .empty-state{text-align:center;padding:3rem 1rem;color:#888;font-size:14px}
+  .loading{text-align:center;padding:2rem;color:#888;font-size:14px}
+  .error{color:#c0392b;font-size:13px;padding:1rem;background:#fef0f0;border-radius:8px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1.25rem;padding:12px 14px;background:#fff;border-radius:8px;border:0.5px solid #e0e0e0;font-size:12px}
+  .legend-item{display:flex;align-items:center;gap:5px;color:#555}
+  @media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.province-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <h1>Silp Cgil — Ricognizione Alloggiativa 233° Corso</h1>
+    <p id="subtitle">Caricamento dati in corso...</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Province compilate</div><div class="stat-value" id="s-prov">—</div></div>
+    <div class="stat"><div class="stat-label">Reparti censiti</div><div class="stat-value" id="s-rep">—</div></div>
+    <div class="stat"><div class="stat-label">Ultimo aggiornamento</div><div class="stat-value" id="s-data" style="font-size:16px;padding-top:6px">—</div></div>
+  </div>
+
+  <div class="legend">
+    <span class="legend-item"><span class="badge b-apm">Alloggio servizio — permanente</span></span>
+    <span class="legend-item"><span class="badge b-ap">Alloggio servizio — periodo di prova</span></span>
+    <span class="legend-item"><span class="badge b-hpm">Hotel — anche oltre il periodo di prova</span></span>
+    <span class="legend-item"><span class="badge b-hp">Hotel — solo periodo di prova</span></span>
+    <span class="legend-item"><span class="disagiata">Disagiata</span> = sede disagiata 2026</span>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="Cerca provincia..." oninput="filterCards()">
+  </div>
+
+  <div class="province-grid" id="province-grid">
+    <div class="loading">Caricamento dati...</div>
+  </div>
+
+  <div id="detail-panel"></div>
+
+</div>
+
+<script>
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrTBe54ad0ugFLtatB05jDzXO_MW4U1J2o4jGAJbGVe85pBbdpCR1n-hWE3t7se8xvWkCq0hbXrssx/pub?gid=97110302&single=true&output=csv';
+
+const AA_LABELS = {
+  'apm':'Alloggio servizio — permanente',
+  'ap':'Alloggio servizio — periodo di prova',
+  'hpm':'Hotel — anche oltre il periodo di prova',
+  'hp':'Hotel — solo periodo di prova'
+};
+const AA_CLASS = {'apm':'b-apm','ap':'b-ap','hpm':'b-hpm','hp':'b-hp'};
+
+const DISAGIATE_KW = ['commissariato distaccato','distaccamento di polizia stradale','sottosez','nucleo artificieri','reparto volo','squadra cinofili','frontiera c/o scalo','barga','gela','niscemi','cortina','palma di montechiaro','roghudi','valico','traforo','autostradale'];
+
+let allData = [];
+let selected = null;
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  return lines.slice(1).map(line => {
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { inQ = !inQ; continue; }
+      if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; continue; }
+      cur += c;
+    }
+    cols.push(cur.trim());
+    return cols;
+  }).filter(r => r.length >= 3 && r[1] && r[1].trim());
+}
+
+function safeJSON(s) {
+  try { return JSON.parse(s); } catch(e) { return {}; }
+}
+
+function dominantAA(aa) {
+  const vals = Object.values(aa);
+  if (!vals.length) return '';
+  const counts = {};
+  vals.forEach(v => counts[v] = (counts[v]||0)+1);
+  return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0];
+}
+
+function isDisagiata(label) {
+  const l = label.toLowerCase();
+  return DISAGIATE_KW.some(k => l.includes(k));
+}
+
+function getCategory(u) {
+  const ul = u.toLowerCase();
+  if (ul.includes('questura')) return 'Questura';
+  if (ul.includes('sezione stradale') || ul.includes('(str.)')) return 'Polizia Stradale';
+  if (ul.includes('polfer')) return 'Polizia Ferroviaria';
+  if (ul.includes('frontiera') || ul.includes('ufficio misto')) return 'Frontiera';
+  if (ul.includes('scuola') || ul.includes('istituto') || ul.includes('centro addestramento') || ul.includes('polgai')) return 'Scuola';
+  if (ul.includes('dia') || ul.includes('sisco') || ul.includes('procura') || ul.includes('cibernetica') || ul.includes('reparto mobile') || ul.includes('squadra') || ul.includes('nucleo') || ul.includes('cinofili') || ul.includes('artificieri') || ul.includes('tiratori') || ul.includes('nocs') || ul.includes('volo') || ul.includes('rpc') || ul.includes('casv') || ul.includes('cnes')) return 'Reparti Speciali';
+  return 'Commissariati';
+}
+
+function loadData() {
+  fetch(SHEET_URL)
+    .then(r => r.text())
+    .then(text => {
+      const rows = parseCSV(text);
+      allData = rows.map(r => ({
+        data: (r[0]||'').trim(),
+        prov: (r[1]||'').trim(),
+        nome: (r[2]||'').trim(),
+        cell: (r[3]||'').trim(),
+        email: (r[4]||'').trim(),
+        uffici: (r[5]||'').split(',').map(s=>s.trim()).filter(Boolean),
+        aa: safeJSON(r[6]||'{}'),
+        an: safeJSON(r[7]||'{}'),
+        note: (r[8]||'').trim()
+      })).filter(d => d.prov);
+
+      const totRep = allData.reduce((s,d)=>s+d.uffici.length,0);
+      const lastDate = allData.reduce((max,d)=>d.data>max?d.data:max,'');
+      document.getElementById('s-prov').textContent = allData.length;
+      document.getElementById('s-rep').textContent = totRep;
+      document.getElementById('s-data').textContent = lastDate.split(',')[0]||'—';
+      document.getElementById('subtitle').textContent = allData.length + ' province hanno compilato · aggiornamento automatico';
+
+      renderCards();
+    })
+    .catch(() => {
+      document.getElementById('province-grid').innerHTML = '<div class="error">Errore nel caricamento. Controlla la connessione o ricarica la pagina.</div>';
+    });
+}
+
+function renderCards() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = allData.filter(d => d.prov.toLowerCase().includes(q));
+  const grid = document.getElementById('province-grid');
+  if (!filtered.length) { grid.innerHTML = '<div class="empty-state">Nessuna provincia trovata</div>'; return; }
+  grid.innerHTML = filtered.map(d => {
+    const dom = dominantAA(d.aa);
+    const dotClass = 'dot-'+(dom||'ap');
+    return `<div class="pcard${selected===d.prov?' active':''}" onclick="showDetail('${d.prov.replace(/'/g,"\\'")}')">
+      <div class="pcard-name">${d.prov}</div>
+      <div class="pcard-info"><span class="pcard-dot ${dotClass}"></span>${d.uffici.length} reparti</div>
+      <div class="pcard-info" style="margin-top:2px">${d.nome}</div>
+    </div>`;
+  }).join('');
+}
+
+function filterCards() { renderCards(); }
+
+function showDetail(prov) {
+  selected = prov;
+  const d = allData.find(x=>x.prov===prov);
+  if (!d) return;
+  renderCards();
+
+  const catOrder = ['Questura','Commissariati','Polizia Stradale','Polizia Ferroviaria','Frontiera','Scuola','Reparti Speciali'];
+  const cats = {};
+  d.uffici.forEach(u => {
+    const cat = getCategory(u);
+    if (!cats[cat]) cats[cat] = [];
+    cats[cat].push(u);
+  });
+
+  let rows = '';
+  catOrder.forEach(cat => {
+    if (!cats[cat]) return;
+    rows += `<tr class="cat-row"><td colspan="3">${cat}</td></tr>`;
+    cats[cat].forEach(u => {
+      const aaVal = d.aa[u]||'';
+      const anVal = d.an[u]||'';
+      const aaLabel = AA_LABELS[aaVal]||'—';
+      const aaClass = AA_CLASS[aaVal]||'b-empty';
+      const anText = anVal.startsWith('specifico:') ? 'N. specifico: '+anVal.split(':')[1] : (anVal==='limitato'?'Limitato agli agenti in arrivo':'—');
+      const dis = isDisagiata(u) ? '<span class="disagiata">Disagiata</span>' : '';
+      rows += `<tr><td>${u}${dis}</td><td><span class="badge ${aaClass}">${aaLabel}</span></td><td style="color:#888;font-size:12px">${anText}</td></tr>`;
+    });
+  });
+
+  const noteHtml = d.note ? `<div class="note-box"><strong>Note:</strong> ${d.note}</div>` : '';
+
+  document.getElementById('detail-panel').innerHTML = `
+    <div class="detail">
+      <div class="detail-header">
+        <div>
+          <div class="detail-title">${d.prov}</div>
+          <div class="detail-sub">Compilato da <strong>${d.nome}</strong> · ${d.data}${d.cell?' · '+d.cell:''}</div>
+        </div>
+        <button class="close-btn" onclick="closeDetail()">✕ chiudi</button>
+      </div>
+      <table class="rep-table">
+        <thead><tr><th>Ufficio / Reparto</th><th>Tipo alloggio</th><th>Disponibilità</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      ${noteHtml}
+    </div>`;
+
+  document.getElementById('detail-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function closeDetail() {
+  selected = null;
+  document.getElementById('detail-panel').innerHTML = '';
+  renderCards();
+}
+
+loadData();
+</script>
+</body>
+</html>
